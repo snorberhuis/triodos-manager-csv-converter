@@ -94,6 +94,7 @@ def set_serie(serie):
         serie_file.write(str(serie))
         serie_file.truncate()
 
+
 def process_input_file(input_file, output_file):
     print "Processing file " + input_file + "..."
     print "Importing rows..."
