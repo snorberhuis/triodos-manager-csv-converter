@@ -1,7 +1,6 @@
 import csv
-import sys
 import os
-import glob
+import sys
 
 
 class TriodosBankRow:
@@ -83,44 +82,23 @@ def export_to_csv(file_name, rows):
             csv_writer.writerow(bank_row.export_to_csv())
 
 
-def get_serie():
-    with open("out/serie", 'rb') as serie_file:
-        serie_text = serie_file.read()
-        return int(serie_text)
-
-
-def set_serie(serie):
-    with open("out/serie", 'r+') as serie_file:
-        serie_file.write(str(serie))
-        serie_file.truncate()
-
-
-def process_input_file(input_file, output_file):
-    print "Processing file " + input_file + "..."
-    print "Importing rows..."
-    triodos_rows = import_from_csv(input_file)
-
+def process_input_file(input, output):
+    print "Processing file " + input + "..."
     print "Converting rows..."
+    triodos_rows = import_from_csv(input)
+
     manager_rows = []
     for triodos_row in triodos_rows:
         manager_rows.append(triodos_row.convert_to_manager_bank_row())
 
-    print "Exporting rows..."
-
-    export_to_csv(output_file, manager_rows)
-
-    print "Removing file"
-    os.remove(input_file)
+    export_to_csv(output, manager_rows)
 
 
 if __name__ == '__main__':
-    serie = get_serie()
+    if len(sys.argv) != 2:
+        print("usage: python convert-csv.py <file-name>")
+        exit(1)
 
-    input_files = os.listdir("in/")
-    for input_file in input_files:
-        serie += 1
-        process_input_file("in/" + input_file, "out/"+str(serie)+".csv")
-
-        print ""
-
-    set_serie(serie)
+    input_file = sys.argv[1]
+    output_file = sys.argv[1]
+    process_input_file(input_file, output_file)

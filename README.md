@@ -5,6 +5,9 @@ Using this converter I am able to download transaction records in csv and import
 
 # Usage
 
-1. Download the `csv` from the online banking Triodos into the `in` folder.
-2. Run `python convert-csv.sh.py`.
-3. Import the highest numbered csv file in `out`.
+1. Download the `csv` from the online banking Triodos.
+2. Run `python convert-csv.py <triodos.csv>`.
+3. Import the csv file into `Manager.io`.
+
+# Example
+python convert-csv.py example_data/example-triodos.csv
